@@ -1,7 +1,8 @@
-type documentsType = {
+type DocType = {
   id: number;
   title: string;
-  context: string;
-  createdAt: string;
+  content: string;
   author: string;
+  createdAt: Date;
+  deleted: boolean;
 };

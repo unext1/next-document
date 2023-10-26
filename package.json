@@ -14,12 +14,14 @@
   "dependencies": {
     "@planetscale/database": "^1.11.0",
     "drizzle-orm": "^0.28.6",
+    "lucide-react": "^0.289.0",
     "mysql2": "^3.6.2",
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@headlessui/react": "^1.7.17",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
