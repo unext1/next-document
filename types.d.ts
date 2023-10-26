@@ -3,5 +3,5 @@ type documentsType = {
   title: string;
   context: string;
   createdAt: string;
-  updatedAt: string;
+  author: string;
 };

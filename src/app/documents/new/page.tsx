@@ -9,7 +9,7 @@ export interface FormData {
   content: string;
 }
 
-export default function Home() {
+export default function NewDocumentPage() {
   const [formData, setFormData] = useState<FormData>({
     author: "",
     title: "",
