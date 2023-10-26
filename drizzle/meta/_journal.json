@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1698265051733,
+      "tag": "0000_striped_deathbird",
+      "breakpoints": true
+    }
+  ]
+}
