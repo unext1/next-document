@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/src/app/components/navbar";
 
 import "react-quill/dist/quill.snow.css";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,7 @@ export default function RootLayout({
         <main className="flex-1 container mt-28 mx-auto px-3 md:px-6">
           {children}
         </main>
-        <footer className="container mx-auto">Footer</footer>
+        <Footer />
       </body>
     </html>
   );

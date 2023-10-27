@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import React, {
@@ -67,7 +66,6 @@ const EditDocumentPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Show "Editing..." while the document is being edited
     setIsEditing(true);
 
     const response = await fetch(`/api/${documentId}`, {
@@ -79,13 +77,10 @@ const EditDocumentPage = () => {
     });
 
     if (response.ok) {
-      // Redirect to the document view page after editing
       router.push(`/documents/${documentId}`);
     } else {
       console.log("Error editing the document");
     }
-
-    // Reset the "Editing..." state after the request is completed
     setIsEditing(false);
   };
 
@@ -100,7 +95,6 @@ const EditDocumentPage = () => {
           Edit Document
         </h1>
         <button
-          type="button" // Remove type="submit"
           onClick={() => router.back()}
           className="bg-blue-400 my-auto px-4 py-1 rounded-xl uppercase font-semibold text-xs text-white"
         >
@@ -161,13 +155,12 @@ const EditDocumentPage = () => {
           />
         </div>
         <button
-          type="button" // Change to type="button"
+          type="button"
           className="relative mt-8 py-2 px-6 w-fit bg-blue-400 text-sm uppercase font-semibold rounded-xl"
           onClick={handleSubmit}
-          disabled={isEditing} // Disable the button while editing
+          disabled={isEditing}
         >
-          {isEditing ? "Editing..." : "Edit Document"}{" "}
-          {/* Change button label while editing */}
+          {isEditing ? "Editing..." : "Edit Document"}
         </button>
       </div>
     </div>
