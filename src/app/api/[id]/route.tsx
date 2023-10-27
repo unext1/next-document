@@ -1,5 +1,6 @@
+import EditDoc from "@/lib/editDoc";
 import GetDoc from "@/lib/getDoc";
-import { useSearchParams } from "next/navigation";
+import RemoveDoc from "@/lib/removeDoc";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -11,4 +12,29 @@ export async function GET(
   const document = await GetDoc({ id });
 
   return NextResponse.json(document, { status: 200 });
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: number } }
+) {
+  const { id } = params;
+
+  const document = await RemoveDoc({ id });
+
+  return NextResponse.json(document, { status: 200 });
+}
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: number } }
+) {
+  const { id } = params;
+  const body = await req.json();
+
+  const { title, author, content } = body;
+
+  await EditDoc({ id, title, author, content });
+
+  return NextResponse.json({ message: "Updated !" }, { status: 200 });
 }

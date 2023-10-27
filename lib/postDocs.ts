@@ -18,7 +18,7 @@ export default async function PostDocs({
 
   const now = new Date();
 
-  // Try fixing formatting for happt db schema
+  // Try fixing formatting for happy db schema
   const formattedDate = `${now.getFullYear()}-${
     now.getMonth() + 1
   }-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;

@@ -32,6 +32,11 @@ export default function NewDocumentPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (!formData.title || !formData.author || !content) {
+      console.log("Please fill in all required fields.");
+      return;
+    }
+
     const response = await fetch("/api", {
       method: "POST",
       body: JSON.stringify({ ...formData, content }),
@@ -56,7 +61,7 @@ export default function NewDocumentPage() {
       <h1 className="uppercase font-semibold tracking-wider">
         Create Document
       </h1>
-      <div>
+      <form>
         <label
           htmlFor="email"
           className="block text-xs mb-1 mt-6 uppercase font-semibold leading-6 text-gray-400"
@@ -100,6 +105,7 @@ export default function NewDocumentPage() {
         <div>
           <ReactQuill
             theme="snow"
+            className="bg-gray-50 text-black rounded-xl "
             modules={{
               toolbar: [
                 ["bold", "italic", "underline", "strike"],
@@ -116,35 +122,23 @@ export default function NewDocumentPage() {
 
                 [{ font: [] }],
                 [{ align: [] }],
+                [{ color: [] }, { background: [] }],
 
                 ["clean"],
               ],
             }}
-            formats={[
-              "header",
-              "bold",
-              "italic",
-              "underline",
-              "strike",
-              "link",
-              "align",
-              "blockquote",
-              "list",
-              "bullet",
-              "script",
-            ]}
             value={content}
             onChange={setContent}
           />
         </div>
         <button
           type="submit"
-          className="relative mt-8 py-2 px-6 w-fit bg-slate-900 rounded-xl "
+          className="relative mt-8 py-2 px-6 w-fit bg-blue-400 text-sm uppercase font-semibold rounded-xl "
           onClick={handleSubmit}
         >
           Add New Document
         </button>
-      </div>
+      </form>
     </div>
   );
 }

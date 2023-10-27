@@ -3,17 +3,13 @@ import { connect } from "@planetscale/database";
 import { config } from "../db/config";
 import { drizzle } from "drizzle-orm/planetscale-serverless";
 import { documents } from "../db/schema";
+import { eq } from "drizzle-orm";
 
-import { asc, desc } from "drizzle-orm";
-
-export default async function GetAllDocs() {
+export default async function RemoveDoc({ id }: { id: number }) {
   const con = connect(config);
   const db = drizzle(con);
 
-  const docs = await db
-    .select()
-    .from(documents)
-    .orderBy(desc(documents.createdAt));
+  const doc = await db.delete(documents).where(eq(documents.id, id));
 
-  return docs;
+  return doc;
 }

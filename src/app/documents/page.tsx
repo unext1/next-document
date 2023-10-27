@@ -1,43 +1,70 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function AllDocs() {
   const [docs, setDocs] = useState<DocType[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
+    setIsLoading(true);
     const getAllDocuments = async () => {
       const res = await fetch("/api");
       const docs = await res.json();
       setDocs(docs);
+      setIsLoading(false);
     };
     getAllDocuments();
   }, []);
 
+  const handleDelete = async ({ id }: { id: number }) => {
+    const response = await fetch(`/api/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      setDocs((prevDocs) => prevDocs.filter((doc) => doc.id !== id));
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading Data...</div>;
+  }
+
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {docs.map((i) => (
-        <Link
+        <div
           key={i.id}
-          href={`/documents/${i.id}`}
-          prefetch={false}
           className="hover:scale-105 transition-all bg-slate-900 p-6 rounded-xl"
-          onClick={() => router.refresh()}
         >
           <div className="flex justify-between">
-            <div className="text-xl font-bold capitalize">{i.title}</div>
-            <div className="bg-red-500 rounded-xl px-1 text-xs my-auto">X</div>
+            <Link
+              href={`/documents/${i.id}`}
+              className="text-xl font-bold capitalize"
+            >
+              {i.title}
+            </Link>
+            <div
+              className="bg-red-500  cursor-pointer rounded-xl px-2 py-1 text-xs my-auto"
+              onClick={() => handleDelete({ id: i.id })}
+            >
+              X
+            </div>
           </div>
-          <div className="text-sm text-gray-400 capitalize">{i.author}</div>
+          <Link
+            href={`/documents/${i.id}`}
+            className="text-sm text-gray-400 capitalize"
+          >
+            {i.author}
+          </Link>
           <div
-            className="text-sm mt-3 text-gray-400"
+            className="text-sm mt-3 text-gray-400 truncate-custom"
             dangerouslySetInnerHTML={{ __html: i.content }}
           />
-        </Link>
+        </div>
       ))}
     </div>
   );

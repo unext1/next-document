@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -32,12 +33,29 @@ const DocumentPage = () => {
 
   return (
     <div>
+      <div className="flex justify-between w-full  mb-4">
+        <h1 className="uppercase font-semibold tracking-wider">
+          Document {documentId}
+        </h1>
+        <Link
+          href={`/documents/${documentId}/edit`}
+          className="bg-blue-400 my-auto px-4 py-1 rounded-xl uppercase font-semibold text-xs text-white"
+        >
+          Edit
+        </Link>
+      </div>
       {singleDoc && (
-        <div>
-          <h1>Document {documentId} Page</h1>
-          <p>Title: {singleDoc.title}</p>
-          <p>Author: {singleDoc.author}</p>
-          <p>Content: {singleDoc.content}</p>
+        <div className="bg-slate-900 rounded-xl p-4">
+          <h1 className="font-bold mb-4">Id: {documentId}</h1>
+          <div className="mt-4 uppercase text-xs text-gray-400">Title:</div>
+          <p> {singleDoc.title}</p>
+          <div className="mt-4 uppercase text-xs text-gray-400">Author:</div>
+          <p>{singleDoc.author}</p>
+          <div className="mt-4 uppercase text-xs text-gray-400">Content:</div>
+          <div
+            className="text-sm mt-1"
+            dangerouslySetInnerHTML={{ __html: singleDoc.content }}
+          />
         </div>
       )}
     </div>
