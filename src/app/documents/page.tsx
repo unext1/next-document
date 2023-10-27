@@ -28,7 +28,10 @@ export default function AllDocs() {
           className="hover:scale-105 transition-all bg-slate-900 p-6 rounded-xl"
           onClick={() => router.refresh()}
         >
-          <div className="text-xl font-bold capitalize">{i.title}</div>
+          <div className="flex justify-between">
+            <div className="text-xl font-bold capitalize">{i.title}</div>
+            <div className="bg-red-500 rounded-xl px-1 text-xs my-auto">X</div>
+          </div>
           <div className="text-sm text-gray-400 capitalize">{i.author}</div>
           <div className="text-sm mt-3 text-gray-400">{i.content}</div>
         </Link>
