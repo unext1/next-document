@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, ChangeEvent, FormEvent, useMemo } from "react";
 import dynamic from "next/dynamic";
 
@@ -10,14 +9,15 @@ export interface FormData {
 
 export default function NewDocumentPage() {
   const [content, setContent] = useState("");
-  const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
-    []
-  );
   const [formData, setFormData] = useState<FormData>({
     author: "",
     title: "",
   });
+  const [error, setError] = useState("");
+  const ReactQuill = useMemo(
+    () => dynamic(() => import("react-quill"), { ssr: false }),
+    []
+  );
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,7 +33,7 @@ export default function NewDocumentPage() {
     e.preventDefault();
 
     if (!formData.title || !formData.author || !content) {
-      console.log("Please fill in all required fields.");
+      setError("Please fill in all required fields.");
       return;
     }
 
@@ -51,19 +51,25 @@ export default function NewDocumentPage() {
         title: "",
       });
       setContent("");
+      setError("");
+      console.log("Document added successfully!");
     } else {
-      console.log("Error adding the document");
+      console.error("Error adding the document");
     }
   };
+
+  console.log(error);
 
   return (
     <div>
       <h1 className="uppercase font-semibold tracking-wider">
         Create Document
       </h1>
+
+      <div>{error && <p className="text-red-500">{error}</p>}</div>
       <form>
         <label
-          htmlFor="email"
+          htmlFor="title"
           className="block text-xs mb-1 mt-6 uppercase font-semibold leading-6 text-gray-400"
         >
           Title
@@ -77,6 +83,7 @@ export default function NewDocumentPage() {
             value={formData.title}
             onChange={handleInputChange}
             required
+            aria-label="Title"
           />
         </div>
         <label
@@ -94,6 +101,7 @@ export default function NewDocumentPage() {
             value={formData.author}
             onChange={handleInputChange}
             required
+            aria-label="Author"
           />
         </div>
         <label
@@ -105,25 +113,21 @@ export default function NewDocumentPage() {
         <div>
           <ReactQuill
             theme="snow"
-            className="bg-gray-50 text-black rounded-xl "
+            className="bg-gray-50 text-black rounded-xl"
             modules={{
               toolbar: [
                 ["bold", "italic", "underline", "strike"],
                 ["blockquote", "code-block"],
-
                 [{ header: 1 }, { header: 2 }],
                 [{ list: "ordered" }, { list: "bullet" }],
                 [{ script: "sub" }, { script: "super" }],
                 [{ indent: "-1" }, { indent: "+1" }],
                 [{ direction: "rtl" }],
-
                 [{ size: ["small", false, "large", "huge"] }],
                 [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
                 [{ font: [] }],
                 [{ align: [] }],
                 [{ color: [] }, { background: [] }],
-
                 ["clean"],
               ],
             }}
@@ -133,7 +137,7 @@ export default function NewDocumentPage() {
         </div>
         <button
           type="submit"
-          className="relative mt-8 py-2 px-6 w-fit bg-blue-400 text-sm uppercase font-semibold rounded-xl "
+          className="relative mt-8 py-2 px-6 w-fit bg-blue-400 text-sm uppercase font-semibold rounded-xl"
           onClick={handleSubmit}
         >
           Add New Document

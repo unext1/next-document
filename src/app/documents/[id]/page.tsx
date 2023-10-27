@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,13 +9,15 @@ const DocumentPage = () => {
   const documentId = params.id;
 
   const [singleDoc, setSingleDoc] = useState<DocType | null>(null);
-
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getSingleDoc = async () => {
       try {
         const result = await fetch(`/api/${documentId}`);
+        if (!result.ok) {
+          throw new Error("Failed to fetch document");
+        }
         const document = await result.json();
         setSingleDoc(document);
       } catch (error) {
@@ -35,7 +38,10 @@ const DocumentPage = () => {
     <div>
       <div className="flex justify-between w-full  mb-4">
         <h1 className="uppercase font-semibold tracking-wider">
-          Document {documentId}
+          <Link href="." className="text-gray-400">
+            All Documents{" "}
+          </Link>
+          / Document {documentId}
         </h1>
         <Link
           href={`/documents/${documentId}/edit`}

@@ -1,6 +1,6 @@
 "use client";
-
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import React, {
   useState,
@@ -32,6 +32,9 @@ const EditDocumentPage = () => {
     const getSingleDoc = async () => {
       try {
         const result = await fetch(`/api/${documentId}`);
+        if (!result.ok) {
+          throw new Error("Failed to fetch document");
+        }
         const document = await result.json();
         setFormData({
           author: document.author,
@@ -66,31 +69,46 @@ const EditDocumentPage = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (isEditing) {
+      return;
+    }
+
     setIsEditing(true);
 
-    const response = await fetch(`/api/${documentId}`, {
-      method: "PATCH",
-      body: JSON.stringify({ ...formData, content }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const response = await fetch(`/api/${documentId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ ...formData, content }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error("Failed to edit the document");
+      }
+
       router.push(`/documents/${documentId}`);
-    } else {
-      console.log("Error editing the document");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsEditing(false);
     }
-    setIsEditing(false);
   };
 
-  const handleDelete = async ({ id }: { id: number }) => {
-    const response = await fetch(`/api/${id}`, {
-      method: "DELETE",
-    });
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/${documentId}`, {
+        method: "DELETE",
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error("Failed to delete the document");
+      }
+
       router.push("/documents");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -103,11 +121,17 @@ const EditDocumentPage = () => {
       <div className="flex justify-between w-full  mb-4">
         <div className="flex space-x-4">
           <h1 className="uppercase font-semibold tracking-wider">
+            <Link href=".." className="text-gray-400">
+              All Documents /
+            </Link>{" "}
+            <Link href="." className="text-gray-400">
+              Document {documentId} /
+            </Link>{" "}
             Edit Document
           </h1>
           <div
-            className="bg-red-500  cursor-pointer rounded-xl px-2 py-1 text-xs my-auto"
-            onClick={() => handleDelete({ id: Number(documentId) })}
+            className="bg-red-500 cursor-pointer rounded-xl px-2 py-1 text-xs my-auto"
+            onClick={handleDelete}
           >
             X
           </div>
@@ -120,7 +144,7 @@ const EditDocumentPage = () => {
         </button>
       </div>
 
-      <div className="bg-slate-900 rounded-xl p-4">
+      <form className="bg-slate-900 rounded-xl p-4">
         <h1 className="font-bold mb-4">Id: {documentId}</h1>
         <div className="mt-4 uppercase text-xs text-gray-400">Title:</div>
         <div className="mt-2">
@@ -173,14 +197,14 @@ const EditDocumentPage = () => {
           />
         </div>
         <button
-          type="button"
+          type="submit"
           className="relative mt-8 py-2 px-6 w-fit bg-blue-400 text-sm uppercase font-semibold rounded-xl"
           onClick={handleSubmit}
           disabled={isEditing}
         >
           {isEditing ? "Editing..." : "Edit Document"}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

@@ -12,7 +12,7 @@ export default function Navbar() {
             <div className="flex my-auto">
               <Link
                 href="/"
-                className="text-xl uppercase tracking-widest text-blue-400"
+                className="text-xl uppercase font-semibold tracking-widest text-blue-400"
               >
                 Doc<span className="text-white">uments</span>
               </Link>

@@ -1,6 +1,6 @@
 # Next.js Planetscale Drizzle ORM Document Management
 
-This is a simple document management system built with Next.js, Planetscale, the Drizzle ORM and TailwindCSS.
+This is a simple document management system built with Next.js, Planetscale, the Drizzle ORM and TailwindCSS. This Projects allows you to have control over documents and they are editable with WYSIWYG editor, which allows more indebt editing.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Access the application in your browser at http://localhost:3000.
 
 ## Usage
 
-This project provides basic document management functionality. You can create, read, update, and delete documents using the provided UI. The main components include:
+This project provides basic document management functionality (CRUD). You can create, read, update, and delete documents using my UI. The main components include:
 
 - List of documents
 - Document page detailed
