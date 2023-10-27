@@ -24,7 +24,5 @@ export default async function EditDoc({
     .set({ title: title, content: content, author: author })
     .where(eq(documents.id, id));
 
-  return {
-    status: 200,
-  };
+  return edit;
 }

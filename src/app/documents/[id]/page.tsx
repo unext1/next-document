@@ -53,7 +53,7 @@ const DocumentPage = () => {
           <p>{singleDoc.author}</p>
           <div className="mt-4 uppercase text-xs text-gray-400">Content:</div>
           <div
-            className="text-sm mt-1"
+            className="text-sm mt-1 prose-sm"
             dangerouslySetInnerHTML={{ __html: singleDoc.content }}
           />
         </div>

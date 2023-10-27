@@ -38,7 +38,7 @@ export default function Navbar() {
               </Link>
             </div>
 
-            <div className="flex items-center sm:hidden">
+            <div className="flex  items-center sm:hidden">
               <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-neutral-content hover:bg-neutral focus:outline-none focus:ring-2 focus:ring-inset focus:ring-neutral-focus">
                 <span className="sr-only">Open main menu</span>
                 {open ? (
@@ -59,10 +59,10 @@ export default function Navbar() {
               </Link>
               <Link href="/documents" className="w-full">
                 <Disclosure.Button className="block w-full py-1 pl-3 pr-4 text-base text-left font-medium ">
-                  Docuemnts
+                  Documents
                 </Disclosure.Button>
-              </Link>{" "}
-              <Link href="/document/add" className="w-full">
+              </Link>
+              <Link href="/documents/new" className="w-full">
                 <Disclosure.Button className="block w-full py-1 pl-3 pr-4 text-base text-left font-medium ">
                   Add Document
                 </Disclosure.Button>

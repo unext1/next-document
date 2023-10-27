@@ -84,6 +84,16 @@ const EditDocumentPage = () => {
     setIsEditing(false);
   };
 
+  const handleDelete = async ({ id }: { id: number }) => {
+    const response = await fetch(`/api/${id}`, {
+      method: "DELETE",
+    });
+
+    if (response.ok) {
+      router.push("/documents");
+    }
+  };
+
   if (isLoading) {
     return <p>Loading Data...</p>;
   }
@@ -91,9 +101,17 @@ const EditDocumentPage = () => {
   return (
     <div>
       <div className="flex justify-between w-full  mb-4">
-        <h1 className="uppercase font-semibold tracking-wider">
-          Edit Document
-        </h1>
+        <div className="flex space-x-4">
+          <h1 className="uppercase font-semibold tracking-wider">
+            Edit Document
+          </h1>
+          <div
+            className="bg-red-500  cursor-pointer rounded-xl px-2 py-1 text-xs my-auto"
+            onClick={() => handleDelete({ id: Number(documentId) })}
+          >
+            X
+          </div>
+        </div>
         <button
           onClick={() => router.back()}
           className="bg-blue-400 my-auto px-4 py-1 rounded-xl uppercase font-semibold text-xs text-white"
