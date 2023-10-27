@@ -33,7 +33,10 @@ export default function AllDocs() {
             <div className="bg-red-500 rounded-xl px-1 text-xs my-auto">X</div>
           </div>
           <div className="text-sm text-gray-400 capitalize">{i.author}</div>
-          <div className="text-sm mt-3 text-gray-400">{i.content}</div>
+          <div
+            className="text-sm mt-3 text-gray-400"
+            dangerouslySetInnerHTML={{ __html: i.content }}
+          />
         </Link>
       ))}
     </div>

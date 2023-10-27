@@ -34,7 +34,7 @@ export default function NewDocumentPage() {
 
     const response = await fetch("/api", {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ ...formData, content }),
       headers: {
         "Content-Type": "application/json",
       },
