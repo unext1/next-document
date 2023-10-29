@@ -15,8 +15,13 @@ export default function AllDocs() {
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
-        const docs = await res.json();
-        setDocs(docs);
+        const allDocs = await res.json();
+
+        const filteredDocs = allDocs.filter(
+          (doc: DocType) => doc.deleted !== 1
+        );
+
+        setDocs(filteredDocs);
         setIsLoading(false);
       } catch (error) {
         console.error(error);

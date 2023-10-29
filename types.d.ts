@@ -4,5 +4,5 @@ type DocType = {
   content: string;
   author: string;
   createdAt: Date;
-  deleted: boolean;
+  deleted: number;
 };
