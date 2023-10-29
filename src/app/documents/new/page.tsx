@@ -113,7 +113,7 @@ export default function NewDocumentPage() {
         <div>
           <ReactQuill
             theme="snow"
-            className="bg-gray-50 text-black rounded-xl"
+            className="bg-gray-50  text-black rounded-xl"
             modules={{
               toolbar: [
                 ["bold", "italic", "underline", "strike"],
